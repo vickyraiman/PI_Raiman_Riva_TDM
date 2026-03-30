@@ -1,35 +1,31 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import Menu from "../Menu/Menu";
+import CrearCuenta from "../../Screens/CrearCuenta/CrearCuenta";
 
 function Header(props) {
-    let session = localStorage.getItem("user");
-    return(
-    <header>
-        <div className="logo-container">
-            <img className="logo" src="img/CineScope.jpg" alt=""/>
-        </div>
-        <nav>
-            <ul className="Navbar">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/peliculas">Películas</Link></li>
-            <li><Link to="/series">Series</Link></li>
-            {session ?(
-                <li>
-                    <Link to="favoritas">Favoritas</Link>
-                </li>
-            ):(
-                <div>
-                    <li>
-                        <Link to="/register">Registro</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">Login</Link>
-                    </li>
-                </div>
-            )}
-            </ul>
-        </nav>
-    </header>
+    let elementos = [
+        { nombre: "Home", ruta: "/" },
+        { nombre: "Películas", ruta: "/peliculas" },
+        { nombre: "Series", ruta: "/series" },
+        { nombre: "Favoritas", ruta: "./Favoritas" },
+        { nombre: "Registro", ruta: "./Registro" },
+        { nombre: "Login", ruta: "./Login" }
+    ]
+    return (
+        <header>
+            <div className="logo-container">
+                <img className="logo" src="img/CineScope.jpg" alt="" />
+            </div>
+            <nav>
+                <ul className="nav nav-tabs my-4">
+                    {elementos.map((elementos, idx) => (
+                        <Menu key={idx} elementos={elementos} />
+                    ))}
+                </ul>
+                
+            </nav>
+        </header>
     );
 }
 
