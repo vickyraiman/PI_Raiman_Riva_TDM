@@ -1,0 +1,25 @@
+/* FOOTER */
+footer {
+    background-color: #dedede;
+    text-align: center;
+    padding: 40px 0;
+    color: #666;
+    width: 100%;
+}
+
+/* HEADER */
+
+.logo{
+    width: auto;
+    height: 65px;
+}
+
+.Navbar{
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
