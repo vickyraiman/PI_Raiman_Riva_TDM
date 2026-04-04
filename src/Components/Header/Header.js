@@ -1,16 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Menu from "../Menu/Menu";
-import CrearCuenta from "../../Screens/CrearCuenta/CrearCuenta";
 
 function Header(props) {
     let elementos = [
         { nombre: "Home", ruta: "/" },
-        { nombre: "Películas", ruta: "/peliculas" },
-        { nombre: "Series", ruta: "/series" },
-        { nombre: "Favoritas", ruta: "./Favoritas" },
-        { nombre: "Registro", ruta: "./Registro" },
-        { nombre: "Login", ruta: "./Login" }
+        { nombre: "Películas", ruta: "/Peliculas" },
+        { nombre: "Series", ruta: "/Series" },
+        { nombre: "Favoritas", ruta: "/Favoritas" },
+        { nombre: "Registro", ruta: "/Registro" },
+        { nombre: "Login", ruta: "/Login" }
     ]
     return (
         <header>
