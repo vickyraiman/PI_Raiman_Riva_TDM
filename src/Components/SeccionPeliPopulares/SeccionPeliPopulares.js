@@ -30,7 +30,8 @@ class SeccionPeliPopulares extends Component {
                             id={pelicula.id}
                             titulo={pelicula.title}
                             descripcion={pelicula.overview}
-                            imagen={pelicula.poster_path} />
+                            imagen={pelicula.poster_path} 
+                            tipo='pelicula'/>
                     ))}
                 </article>
             </section>
