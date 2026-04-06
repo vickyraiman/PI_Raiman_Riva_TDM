@@ -2,18 +2,29 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "./Screens/Home/Home";
 import DetallePelicula from "./Screens/DetallePelicula/DetallePelicula";
-import SearchResults from "./Screens/searchResults/searchResults";
+import SearchResults from "./Screens/SearchResults/SearchResults";
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
+import DetalleSerie from "./Screens/DetalleSerie/DetalleSerie";
+import Error from "./Screens/Error/Error";
+import Busqueda from "./Components/Busqueda/Busqueda";
 
 
 function App() {
   return (
+   <div>
 
+    <Header/>
+    <Busqueda/>
     <Switch>
       <Route path="/" exact={true} component={Home} />
-      <Route path="/searchresults/:nombre" element={<SearchResults />} />
-      <Route path="/pelicula/:id" element={<DetallePelicula />} />
+      <Route path="/searchresults/:nombre" component={SearchResults} />
+      <Route path="/pelicula/:id" component={DetallePelicula} />
+      <Route path="/serie/:id" component={DetalleSerie}/>
+      <Route component={Error}/>
     </Switch>
-
+    <Footer/>
+    </div> 
   )
 }
 

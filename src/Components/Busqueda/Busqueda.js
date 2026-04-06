@@ -22,6 +22,9 @@ class Busqueda extends Component {
             return;
         }
 
+        console.log('props nav', this.props)
+        console.log(this.state)
+
         this.props.history.push(`/searchresults/${this.state.busqueda}`);
     }
 

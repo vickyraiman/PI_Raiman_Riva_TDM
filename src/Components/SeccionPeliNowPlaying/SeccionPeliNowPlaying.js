@@ -23,7 +23,6 @@ class SeccionPeliNowPlaying extends Component{
 
         return(
             <section className="row cards" id="now-playing">
-                <article className="single-card-playing">
                     {this.state.peliculas.map((pelicula)=>(
                         <Card
                             key={pelicula.id}
@@ -35,7 +34,6 @@ class SeccionPeliNowPlaying extends Component{
                         />
 
                     ))}
-                </article>
             </section>
         )
     }

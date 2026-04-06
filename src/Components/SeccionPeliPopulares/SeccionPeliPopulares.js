@@ -23,7 +23,6 @@ class SeccionPeliPopulares extends Component {
 
         return (
             <section className="row cards" id="movies">
-                <article className="single-card-movie">
                     {this.state.peliculas.map((pelicula) => (
                         <Card
                             key={pelicula.id}
@@ -33,7 +32,6 @@ class SeccionPeliPopulares extends Component {
                             imagen={pelicula.poster_path} 
                             tipo='pelicula'/>
                     ))}
-                </article>
             </section>
         )
     }

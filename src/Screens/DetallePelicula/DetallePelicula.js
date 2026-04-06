@@ -17,6 +17,13 @@ class Pelicula extends Component {
                 pelicula: data
             }))
             .catch(error => console.log(error));
+
+        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apikey}`)
+            .then(response => response.json())
+            .then(data => this.setState({
+                genero: data.genres
+            }))
+            .catch(error => console.log(error))
     }
 
     render() {
@@ -34,11 +41,12 @@ class Pelicula extends Component {
                 <section className="row">
                     <img src={"https://image.tmdb.org/t/p/w342/" + this.state.pelicula.poster_path} className="col-md-6" alt={this.state.pelicula.title} />
                     <section className="col-md-6 info">
-                        <h3>Descripción</h3>
+                        <h3>Sinópsis</h3>
                         <p className="description">{this.state.pelicula.overview}</p>
-                        <p className='mt-0 mb-0' id='release-date'><strong>Fecha de estreno:</strong>{this.state.pelicula.release_date}</p>
-                        <p className="mt-0 mb-0 " id="length"><strong>Duración:</strong>{this.state.pelicula.runtime} </p>
-                        <p className="mt-0" id="votes"><strong>Puntuación:</strong>{this.state.pelicula.vote_count} </p>
+                        <p className='mt-0 mb-0' id='release-date'><strong>Fecha de estreno:</strong> {this.state.pelicula.release_date}</p>
+                        <p className="mt-0 mb-0 " id="length"><strong>Duración:</strong> {this.state.pelicula.runtime} minutos</p>
+                        <p className="mt-0" id="votes"><strong>Puntuación:</strong> {this.state.pelicula.vote_average}</p>
+                        <p className="mt-0" id="votes"><strong>Genero:</strong>{this.state.pelicula.genres.map(genero => genero.name + ' ')}</p>
                     </section>
                 </section>
 

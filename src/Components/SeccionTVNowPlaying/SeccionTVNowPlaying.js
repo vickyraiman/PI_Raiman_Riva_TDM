@@ -23,7 +23,6 @@ class SeccionTVNowPlaying extends Component{
 
         return(
             <section className="row cards" id="on-air-today">
-                <article className="single-card-on-air mb-3">
                 {this.state.series.map((serie)=>(
                         <Card
                             key={serie.id}
@@ -33,7 +32,6 @@ class SeccionTVNowPlaying extends Component{
                             imagen={serie.poster_path}
                             tipo='serie'/>
                     ))}
-                </article>
             </section>
         )
     }

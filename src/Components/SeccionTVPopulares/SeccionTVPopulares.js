@@ -23,7 +23,6 @@ class SeccionTVPopulares extends Component{
 
         return(
             <section className="row cards" id="tv-show">
-                <article className="single-card-tv">
                     {this.state.series.map((serie)=>(
                         <Card
                             key={serie.id}
@@ -33,7 +32,6 @@ class SeccionTVPopulares extends Component{
                             imagen={serie.poster_path}
                             tipo='serie'/>
                     ))}
-                </article>
             </section>
         )
     }

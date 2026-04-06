@@ -2,8 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 function Card(props) {
-console.log(props.tipo);
-console.log(props.id);
     let rutaDetalle = "";
     if(props.tipo === 'pelicula'){
         rutaDetalle = `/pelicula/${props.id}`;

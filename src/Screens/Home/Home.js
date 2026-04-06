@@ -1,6 +1,4 @@
 import React from "react";
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import Busqueda from "../../Components/Busqueda/Busqueda";
 import SeccionPeliPopulares from "../../Components/SeccionPeliPopulares/SeccionPeliPopulares";
 import SeccionPeliNowPlaying from "../../Components/SeccionPeliNowPlaying/SeccionPeliNowPlaying";
@@ -11,9 +9,6 @@ function Home() {
 
     return (
         <div className="container">
-            <Header />
-
-            <Busqueda />
 
             <h2 className="alert alert-primary">Popular Movies This Week</h2>
             <SeccionPeliPopulares />
@@ -26,7 +21,6 @@ function Home() {
 
             <h2 className="alert alert-warning">TV Shows Airing Today</h2>
             <SeccionTVNowPlaying />
-            <Footer />
         </div>
     );
 }

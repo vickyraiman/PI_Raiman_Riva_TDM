@@ -14,7 +14,7 @@ class SearchResults extends Component {
     }
 
     componentDidMount() {
-
+console.log('llega al didmount')
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${this.props.match.params.nombre}`)
             .then(response => response.json())
             .then(data => this.setState({
@@ -54,7 +54,7 @@ class SearchResults extends Component {
                 {this.state.series.length === 0 ? (
                     <h3>No hay resultados</h3>
                 ) : (
-                    this.state.series.map((serie, idx) => (
+                    this.state.series.map((serie) => (
                         <Card
                             key={serie.id}
                             id={serie.id}
