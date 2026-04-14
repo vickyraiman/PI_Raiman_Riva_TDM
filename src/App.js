@@ -8,7 +8,8 @@ import Footer from "./Components/Footer/Footer";
 import DetalleSerie from "./Screens/DetalleSerie/DetalleSerie";
 import Error from "./Screens/Error/Error";
 import Busqueda from "./Components/Busqueda/Busqueda";
-
+import Registro from "./Screens/Registro/Registro";
+import Login from "./Screens/Login/Login";
 
 function App() {
   return (
@@ -21,7 +22,10 @@ function App() {
       <Route path="/searchresults/:nombre" component={SearchResults} />
       <Route path="/pelicula/:id" component={DetallePelicula} />
       <Route path="/serie/:id" component={DetalleSerie}/>
+      <Route path="/Registro" component={Registro}/>
+      <Route path="/Login" component={Login}/>
       <Route component={Error}/>
+      
     </Switch>
     <Footer/>
     </div> 

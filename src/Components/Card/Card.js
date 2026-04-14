@@ -6,7 +6,12 @@ class Card extends Component {
         super(props);
         this.state = {
             esFavorito: false,
+            mostrarDescripcion: false,
         };
+    }
+
+    cambiarDescripcion() {
+        this.setState({ mostrarDescripcion: !this.state.mostrarDescripcion });
     }
 
     agregarFavoritos() {
@@ -47,7 +52,10 @@ class Card extends Component {
 
                 <div className="cardBody">
                     <h5 className="card-title">{this.props.titulo}</h5>
-                    <p className="card-text">{this.props.descripcion}</p>
+                    <button onClick={() => this.cambiarDescripcion()} className="btn btn-info">
+                        {this.state.mostrarDescripcion ? "Ocultar Descripción" : "Mostrar Descripción"}
+                    </button>
+                    {this.state.mostrarDescripcion ? (<p className="card-text">{this.props.descripcion}</p>) : null}
                     <Link to={rutaDetalle}>
                         <button className="btn btn-primary">Ver Más</button>
                     </Link>

@@ -1,5 +1,9 @@
 import React from "react";
 import Menu from "../Menu/Menu";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+let usuarioLogueado = cookies.get("user-cookie");
 
 function Header(props) {
     let elementos = [
@@ -21,7 +25,9 @@ function Header(props) {
                         <Menu key={idx} elementos={elementos} />
                     ))}
                 </ul>
-                
+                    {usuarioLogueado ? <p className="usuario-logueado">{usuarioLogueado}</p> : null}
+                    
+
             </nav>
         </header>
     );
