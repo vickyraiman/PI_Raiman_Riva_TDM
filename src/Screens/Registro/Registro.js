@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Login from "../Login/Login";
+import Header from "../../Components/Header/Header";
 
 const cookies = new Cookies();
 
@@ -69,6 +70,7 @@ controlarCambiosPassword(event) {
     render() {
         return (
             <div>
+                <Header/>
                 <h2 className="alert alert-primary">Registro</h2>
                 <div className="row justify-content-center"></div>
                 <div className='col-md-6'>

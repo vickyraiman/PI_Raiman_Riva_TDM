@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import Loader from "../../Components/Loader/Loader";
+import Header from "../../Components/Header/Header";
 const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f';
 
 class Pelicula extends Component {
@@ -29,14 +30,12 @@ class Pelicula extends Component {
     render() {
         if (this.state.pelicula === null) {
             return (
-                <div>
-                    <img src="./img/cargando.gif" alt="Cargando..."></img>
-                </div>
+                <Loader/>
             )
         }
         return (
             <div>
-
+                <Header/>
                 <h2 class="alert alert-primary">{this.state.pelicula.title}</h2>
                 <section className="row">
                     <img src={"https://image.tmdb.org/t/p/w342/" + this.state.pelicula.poster_path} className="col-md-6" alt={this.state.pelicula.title} />

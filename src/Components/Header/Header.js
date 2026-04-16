@@ -1,36 +1,62 @@
 import React from "react";
-import Menu from "../Menu/Menu";
+import {Link, withRouter} from "react-router-dom"
 import Cookies from "universal-cookie";
-
 const cookies = new Cookies();
-let usuarioLogueado = cookies.get("user-cookie");
 
-function Header(props) {
-    let elementos = [
-        { nombre: "Home", ruta: "/" },
-        { nombre: "Películas", ruta: "/Peliculas" },
-        { nombre: "Series", ruta: "/Series" },
-        { nombre: "Favoritas", ruta: "/Favoritas" },
-        { nombre: "Registro", ruta: "/Registro" },
-        { nombre: "Login", ruta: "/Login" }
-    ]
-    return (
-        <header>
-            <div className="logo-container">
-                <img className="logo" src="img/CineScope.jpg" alt="" />
-            </div>
-            <nav>
-                <ul className="nav nav-tabs my-4">
-                    {elementos.map((elementos, idx) => (
-                        <Menu key={idx} elementos={elementos} />
-                    ))}
-                </ul>
-                    {usuarioLogueado ? <p className="usuario-logueado">{usuarioLogueado}</p> : null}
-                    
 
-            </nav>
-        </header>
-    );
+
+class Header extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            cookie: cookies.get("user-cookie")
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.state.cookie !== cookies.get("user-cookie")) {
+            this.setState({
+                cookie: cookies.get("user-cookie")
+            });
+        }
+    }
+
+    cerrarSesion() {
+        cookies.remove("user-cookie");
+        this.setState({
+            cookie: cookies.get("user-cookie")})
+    }
+
+    render() {
+        let usuarioLogueado = cookies.get("user-cookie");
+        return (
+            <React.Fragment>
+                <div className="logo-container">
+                    <img className="logo" src="img/CineScope.jpg" alt="" />
+                </div>
+                <nav>
+                    {usuarioLogueado ?
+                        <ul className="nav nav-tabs my-4">
+                            <li className= "nav-item"><Link className="nav-link" to="/">Home</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Peliculas">Peliculas</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Series">Series</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Favoritas">Favoritas</Link></li>
+                            <button className="nav-link" onClick={() => this.cerrarSesion()}>Logout</button>
+                        </ul>
+                        :
+                        <ul className= "nav nav-tabs my-4">
+                            <li className= "nav-item"><Link className="nav-link" to="/">Home</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Peliculas">Peliculas</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Series">Series</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Registro">Registro</Link></li>
+                            <li className= "nav-item"><Link className="nav-link" to="/Login">Login</Link></li>
+                        </ul>
+                        }
+                </nav>
+            </React.Fragment>
+        )
+    }
 }
 
 export default Header;

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import Card from '../Card/Card'
-const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f'
+import Card from '../Card/Card';
+import Loader from "../../Components/Loader/Loader";
+const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f';
     
 class SeccionPeliPopulares extends Component {
     constructor(props) {
@@ -20,7 +21,11 @@ class SeccionPeliPopulares extends Component {
     }
 
     render() {
-
+        if (this.state.peliculas === null) {
+            return (
+                <Loader/>
+            )
+        }
         return (
             <section className="row cards" id="movies">
                     {this.state.peliculas.map((pelicula) => (

@@ -1,6 +1,5 @@
 import React from "react";
 import Header from '../../Components/Header/Header';
-import Footer from '../../Components/Footer/Footer';
 
 class Login extends React.Component {
     
@@ -37,6 +36,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 <h2 className="alert alert-primary">Iniciar sesión</h2>
                 <div className="row justify-content-center">
                     <div className="col-md-6">

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import Card from '../Card/Card'
+import Card from '../Card/Card';
+import Loader from "../../Components/Loader/Loader";
 const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f'
 
 class SeccionTVNowPlaying extends Component{
@@ -20,7 +21,11 @@ class SeccionTVNowPlaying extends Component{
     }
 
     render(){
-
+        if (this.state.series === null) {
+            return (
+                <Loader/>
+            )
+        }
         return(
             <section className="row cards" id="on-air-today">
                 {this.state.series.map((serie)=>(
