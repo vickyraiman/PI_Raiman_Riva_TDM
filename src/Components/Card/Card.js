@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 class Card extends Component {
     constructor(props) {
@@ -39,6 +41,7 @@ class Card extends Component {
 
     render() {
         let rutaDetalle = "";
+        let usuarioLogueado = cookies.get("user-cookie");
         if (this.props.tipo === 'pelicula') {
             rutaDetalle = `/pelicula/${this.props.id}`;
         } else if (this.props.tipo === 'serie') {
@@ -59,9 +62,12 @@ class Card extends Component {
                     <Link to={rutaDetalle}>
                         <button className="btn btn-primary">Ver Más</button>
                     </Link>
-                    <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
-                        {this.state.esFavorito ? "❤️" : "🩶"}
-                    </button>
+
+                    {usuarioLogueado ? (
+                        <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
+                            {this.state.esFavorito ? "❤️" : "🩶"}
+                        </button>
+                    ) : null}
                 </div>
             </article>
         );
