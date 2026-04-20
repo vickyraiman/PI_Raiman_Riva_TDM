@@ -3,12 +3,12 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./Screens/Home/Home";
 import DetallePelicula from "./Screens/DetallePelicula/DetallePelicula";
 import SearchResults from "./Screens/SearchResults/SearchResults";
-import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import DetalleSerie from "./Screens/DetalleSerie/DetalleSerie";
 import Error from "./Screens/Error/Error";
 import Registro from "./Screens/Registro/Registro";
 import Login from "./Screens/Login/Login";
+import Favoritas from "./Screens/Favoritas/Favoritas";
 import Peliculas from "./Screens/Peliculas/Peliculas"
 import Series from "./Screens/Series/Series"
 
@@ -23,6 +23,8 @@ function App() {
       <Route path="/serie/:id" component={DetalleSerie}/>
       <Route path="/Registro" component={Registro}/>
       <Route path="/Login" component={Login}/>
+      <Route path="/Favoritas" component={Favoritas}/>
+
       {/* <Route path="/Peliculas" component={Peliculas}/>
       <Route path="/Series" component={Series}/> */}
       <Route component={Error}/>

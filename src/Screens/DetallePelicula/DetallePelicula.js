@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import Loader from "../../Components/Loader/Loader";
 import Header from "../../Components/Header/Header";
+import Cookies from "universal-cookie";
 const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f';
+const cookies = new Cookies();
+
 
 class Pelicula extends Component {
     constructor(props) {
         super(props);
         this.state = {
             pelicula: null,
+            esFavorito: false,
         };
     }
 
@@ -26,8 +30,27 @@ class Pelicula extends Component {
             }))
             .catch(error => console.log(error))
     }
+    agregarFavoritos() {
+
+        let arrayFavoritosPelicula = JSON.parse(localStorage.getItem("favoritosPelicula"))
+        this.setState({
+            esFavorito: !this.state.esFavorito,
+        });
+            if (arrayFavoritosPelicula === null) {
+                arrayFavoritosPelicula = [];
+            }
+            arrayFavoritosPelicula.push(this.state.pelicula.id);
+            localStorage.setItem("favoritosPelicula", JSON.stringify(arrayFavoritosPelicula));
+
+            this.setState({
+                esFavorito: true,
+            });
+        
+    }
+
 
     render() {
+        let usuarioLogueado = cookies.get("user-cookie");
         if (this.state.pelicula === null) {
             return (
                 <Loader/>
@@ -46,6 +69,11 @@ class Pelicula extends Component {
                         <p className="mt-0 mb-0 " id="length"><strong>Duración:</strong> {this.state.pelicula.runtime} minutos</p>
                         <p className="mt-0" id="votes"><strong>Puntuación:</strong> {this.state.pelicula.vote_average}</p>
                         <p className="mt-0" id="votes"><strong>Genero:</strong>{this.state.pelicula.genres.map(genero => genero.name + ' ')}</p>
+                        {usuarioLogueado ? (
+                        <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
+                            {this.state.esFavorito ? "❤️" : "🩶"}
+                        </button>
+                    ) : null}
                     </section>
                 </section>
 

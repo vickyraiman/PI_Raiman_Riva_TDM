@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import Loader from "../../Components/Loader/Loader";
 import Header from "../../Components/Header/Header";
+import Cookies from "universal-cookie";
 
 const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f';
+const cookies = new Cookies();
 
 class Serie extends Component {
     constructor(props) {
         super(props);
         this.state = {
             serie: null,
+            esFavorito: false,
         };
     }
 
@@ -28,8 +31,27 @@ class Serie extends Component {
             .catch(error => console.log(error))
     }
 
+        agregarFavoritos() {
+
+        let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie"))
+        this.setState({
+            esFavorito: !this.state.esFavorito,
+        });
+
+            if (arrayFavoritosSerie === null) {
+                arrayFavoritosSerie = [];
+            }
+            arrayFavoritosSerie.push(this.state.serie.id);
+            localStorage.setItem("favoritosSerie", JSON.stringify(arrayFavoritosSerie));
+
+            this.setState({
+                esFavorito: true,
+            });
+    }
+
 
 render(){
+    let usuarioLogueado = cookies.get("user-cookie");
     if (this.state.serie === null) {
         return (
             <Loader/>
@@ -47,6 +69,11 @@ render(){
                     <p className='mt-0 mb-0' id='release-date'><strong>Fecha de estreno:</strong> {this.state.serie.first_air_date}</p>
                     <p className="mt-0" id="votes"><strong>Puntuación:</strong> {this.state.serie.vote_average}</p>
                     <p className="mt-0" id="votes"><strong>Genero:</strong>{this.state.serie.genres.map(genero => genero.name + ' ')}</p>
+                    {usuarioLogueado ? (
+                        <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
+                            {this.state.esFavorito ? "❤️" : "🩶"}
+                        </button>
+                    ) : null}
                 </section>
             </section>
 
