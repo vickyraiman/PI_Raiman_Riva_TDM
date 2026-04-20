@@ -24,9 +24,8 @@ function App() {
       <Route path="/Registro" component={Registro}/>
       <Route path="/Login" component={Login}/>
       <Route path="/Favoritas" component={Favoritas}/>
-
-      {/* <Route path="/Peliculas" component={Peliculas}/>
-      <Route path="/Series" component={Series}/> */}
+      <Route path="/Peliculas" component={Peliculas}/>
+      {/* <Route path="/Series" component={Series}/> */}
       <Route component={Error}/>
     </Switch>
     <Footer/>
