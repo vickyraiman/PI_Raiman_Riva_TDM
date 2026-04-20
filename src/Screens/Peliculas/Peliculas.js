@@ -73,7 +73,6 @@ class Peliculas extends Component {
                 <div className="container">
                     <h2 className="alert alert-primary">Peliculas Mejor Valoradas</h2>
                     <form onSubmit={(event) => this.evitarSubmit(event)} className="mb-4">
-                        <label>Filtrar Películas: </label>
                         <input
                             type="text"
                             className="form-control"

@@ -1,4 +1,4 @@
-/* FOOTER */
+
 footer {
     background-color: #dedede;
     text-align: center;
@@ -7,7 +7,6 @@ footer {
     width: 100%;
 }
 
-/* HEADER */
 .logo {
     width: 150px;
     height: auto;
@@ -102,12 +101,107 @@ nav {
     width: 15%;
 }
 
-@media(min-width: 765px){
-    nav {
-        grid-template-columns: 1fr;
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+.nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.single-card-movie {
+    width: 23%;
+}
+
+
+.single-card-tv,
+.single-card-people {
+    width: 18%;
+}
+
+
+.single-card-on-air,
+.single-card-playing {
+    width: 15%;
+}
+
+
+/*TABLET */
+@media (max-width: 992px) {
+
+    .nav {
+        flex-wrap: wrap;
+    }
+
+
+    .single-card-movie,
+    .single-card-tv,
+    .single-card-people,
+    .single-card-on-air,
+    .single-card-playing {
+        width: 45%;
     }
 }
 
-/* REGISTRO */
+
+/* MOBILE */
+@media (max-width: 576px) {
+
+
+    .nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-item,
+    .nav-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .single-card-movie,
+    .single-card-tv,
+    .single-card-people,
+    .single-card-on-air,
+    .single-card-playing {
+        width: 100%;
+    }
+
+
+    .btn,
+    button {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+
+    .form-control {
+        width: 100%;
+    }
+
+
+    h1, h2, h3 {
+        text-align: center;
+    }
+}
 
 
