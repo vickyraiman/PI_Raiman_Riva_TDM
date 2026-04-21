@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React, { Component } from "react"
 import Header from "../../Components/Header/Header"
 import { Link } from "react-router-dom"
 import Cookies from "universal-cookie"
@@ -17,6 +17,10 @@ class Favoritas extends Component {
         }
     }
 
+    cambiarDescripcion() {
+        this.setState({ mostrarDescripcion: !this.state.mostrarDescripcion });
+    }
+
     componentDidMount() {
         let favoritosPelicula = JSON.parse(localStorage.getItem("favoritosPelicula"))
         let favoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie"))
@@ -33,9 +37,9 @@ class Favoritas extends Component {
                 peliculasFavoritas: [],
                 cargandoPeliculas: false,
             })
-        }else{
+        } else {
             let peliculas = []
-            favoritosPelicula.map((id)=>
+            favoritosPelicula.map((id) =>
                 fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apikey}`)
                     .then(response => response.json())
                     .then(data => {
@@ -54,9 +58,9 @@ class Favoritas extends Component {
                 seriesFavoritas: [],
                 cargandoSeries: false,
             })
-        }else{
+        } else {
             let series = []
-            favoritosSerie.map((id)=>
+            favoritosSerie.map((id) =>
                 fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${apikey}`)
                     .then(response => response.json())
                     .then(data => {
@@ -72,20 +76,27 @@ class Favoritas extends Component {
     }
 
     sacarFavorito(id, tipo) {
+        
         if (tipo === "pelicula") {
+
             let favoritosPelicula = JSON.parse(localStorage.getItem("favoritosPelicula"))
 
             if (favoritosPelicula === null) {
                 favoritosPelicula = []
             }
 
-            let filtrados = favoritosPelicula.filter(function(unId){
+            let filtrados = favoritosPelicula.filter(function (unId) {
                 return unId !== id
             })
 
             localStorage.setItem("favoritosPelicula", JSON.stringify(filtrados))
 
-            let peliculasActualizadas = this.state.peliculasFavoritas.filter(function(unaPelicula){
+
+            console.log(favoritosPelicula);
+            if (favoritosPelicula.includes(id)) {
+            }
+
+            let peliculasActualizadas = this.state.peliculasFavoritas.filter(function (unaPelicula) {
                 return unaPelicula.id !== id
             })
 
@@ -100,13 +111,13 @@ class Favoritas extends Component {
                 favoritosSerie = []
             }
 
-            let filtrados = favoritosSerie.filter(function(unId){
+            let filtrados = favoritosSerie.filter(function (unId) {
                 return unId !== id
             })
 
             localStorage.setItem("favoritosSerie", JSON.stringify(filtrados))
 
-            let seriesActualizadas = this.state.seriesFavoritas.filter(function(unaSerie){
+            let seriesActualizadas = this.state.seriesFavoritas.filter(function (unaSerie) {
                 return unaSerie.id !== id
             })
 
@@ -117,7 +128,7 @@ class Favoritas extends Component {
     }
 
     render() {
-         return (
+        return (
             <div>
                 <Header />
 
@@ -140,7 +151,10 @@ class Favoritas extends Component {
 
                                     <div className="cardBody">
                                         <h5 className="card-title">{pelicula.title}</h5>
-
+                                        <button onClick={() => this.cambiarDescripcion()} className="btn btn-info">
+                                            {this.state.mostrarDescripcion ? "Ocultar Descripción" : "Mostrar Descripción"}
+                                        </button>
+                                        {this.state.mostrarDescripcion ? (<p className="card-text">{pelicula.overview}</p>) : null}
                                         <Link to={`/pelicula/${pelicula.id}`}>
                                             <button className="btn btn-primary">Ver más</button>
                                         </Link>
@@ -175,7 +189,10 @@ class Favoritas extends Component {
 
                                     <div className="cardBody">
                                         <h5 className="card-title">{serie.name}</h5>
-
+                                        <button onClick={() => this.cambiarDescripcion()} className="btn btn-info">
+                                            {this.state.mostrarDescripcion ? "Ocultar Descripción" : "Mostrar Descripción"}
+                                        </button>
+                                        {this.state.mostrarDescripcion ? (<p className="card-text">{serie.overview}</p>) : null}
                                         <Link to={`/serie/${serie.id}`}>
                                             <button className="btn btn-primary">Ver más</button>
                                         </Link>

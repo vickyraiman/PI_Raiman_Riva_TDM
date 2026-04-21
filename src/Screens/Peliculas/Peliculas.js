@@ -12,7 +12,7 @@ class Peliculas extends Component {
         this.state = {
             peliculas: [],
             peliculasOriginales: [],
-            cantidadMostrada: 4,
+            pagina: 1,
             busqueda: "",
             cargando: true,
         };
@@ -24,15 +24,22 @@ class Peliculas extends Component {
             .then(data => this.setState({
                 peliculas: data.results,
                 peliculasOriginales: data.results,
+                pagina: this.state.pagina + 1,
                 cargando: false,
             }))
             .catch(error => console.log(error));
     }
 
     cargarMas() {
-        this.setState({
-            cantidadMostrada: this.state.cantidadMostrada + 4,
-        });
+       fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apikey}&page=${this.state.pagina}`)
+            .then(response => response.json())
+            .then(data => this.setState({
+                peliculas: this.state.peliculas.concat(data.results),
+                peliculasOriginales: this.state.peliculasOriginales.concat(data.results),
+                pagina: this.state.pagina + 1,
+                cargando: false,
+            }))
+            .catch(error => console.log(error));
     }
 
     controlarCambios(event) {
@@ -48,7 +55,6 @@ class Peliculas extends Component {
 
         this.setState({
             peliculas: peliculasFiltradas,
-            cantidadMostrada: 4,
         });
     }
 
@@ -68,9 +74,10 @@ class Peliculas extends Component {
 
         return (
             <div>
-                <Header />
 
                 <div className="container">
+                <Header />
+                    
                     <h2 className="alert alert-primary">Peliculas Mejor Valoradas</h2>
                     <form onSubmit={(event) => this.evitarSubmit(event)} className="mb-4">
                         <input
@@ -84,7 +91,7 @@ class Peliculas extends Component {
 
                     <section className="row cards">
                         {this.state.peliculas.length > 0 ? (
-                            this.state.peliculas.slice(0, this.state.cantidadMostrada).map((pelicula, idx) => (
+                            this.state.peliculas.map((pelicula, idx) => (
                                 <Card
                                     key={pelicula.id + idx}
                                     id={pelicula.id}
@@ -99,11 +106,9 @@ class Peliculas extends Component {
                         )}
                     </section>
 
-                    {this.state.cantidadMostrada < this.state.peliculas.length ? (
                         <button onClick={() => this.cargarMas()} className="btn btn-success mb-4">
                             Cargar Más
                         </button>
-                    ) : null}
 
                 </div>
             </div>

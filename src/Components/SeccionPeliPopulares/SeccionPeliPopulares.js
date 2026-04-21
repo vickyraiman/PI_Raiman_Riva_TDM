@@ -28,7 +28,7 @@ class SeccionPeliPopulares extends Component {
         }
         return (
             <section className="row cards" id="movies">
-                    {this.state.peliculas.map((pelicula) => (
+                    {this.state.peliculas.slice(0,4).map((pelicula) => (
                         <Card
                             key={pelicula.id}
                             id={pelicula.id}

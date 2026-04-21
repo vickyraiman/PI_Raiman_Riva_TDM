@@ -12,7 +12,7 @@ class Series extends Component {
         this.state = {
             series: [],
             seriesOriginales: [],
-            cantidadMostrada: 4,
+            pagina: 1,
             busqueda: "",
             cargando: true,
         };
@@ -24,15 +24,22 @@ class Series extends Component {
             .then(data => this.setState({
                 series: data.results,
                 seriesOriginales: data.results,
+                pagina: this.state.pagina + 1,
                 cargando: false,
             }))
             .catch(error => console.log(error));
     }
 
     cargarMas() {
-        this.setState({
-            cantidadMostrada: this.state.cantidadMostrada + 4,
-        });
+       fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${apikey}&page=${this.state.pagina}`)
+            .then(response => response.json())
+            .then(data => this.setState({
+                series: this.state.series.concat(data.results),
+                seriesOriginales: this.state.seriesOriginales.concat(data.results),
+                pagina: this.state.pagina + 1,
+                cargando: false,
+            }))
+            .catch(error => console.log(error));
     }
 
     controlarCambios(event) {
@@ -48,7 +55,6 @@ class Series extends Component {
 
         this.setState({
             series: seriesFiltradas,
-            cantidadMostrada: 4,
         });
     }
 
@@ -68,9 +74,10 @@ class Series extends Component {
 
         return (
             <div>
-                <Header />
 
                 <div className="container">
+                <Header />
+                    
                     <h2 className="alert alert-primary">Series Mejor Valoradas</h2>
                     <form onSubmit={(event) => this.evitarSubmit(event)} className="mb-4">
                         <input
@@ -84,7 +91,7 @@ class Series extends Component {
 
                     <section className="row cards">
                         {this.state.series.length > 0 ? (
-                            this.state.series.slice(0, this.state.cantidadMostrada).map((serie, idx) => (
+                            this.state.series.map((serie, idx) => (
                                 <Card
                                     key={serie.id + idx}
                                     id={serie.id}
@@ -99,11 +106,9 @@ class Series extends Component {
                         )}
                     </section>
 
-                    {this.state.cantidadMostrada < this.state.series.length ? (
                         <button onClick={() => this.cargarMas()} className="btn btn-success mb-4">
                             Cargar Más
                         </button>
-                    ) : null}
 
                 </div>
             </div>

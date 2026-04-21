@@ -33,7 +33,7 @@ class Header extends React.Component {
         return (
             <React.Fragment>
                 <div className="logo-container">
-                    <img className="logo" src="img/CineScope.jpg" alt="" />
+                    <img className="logo" src="/img/logo.jpg" alt="" />
                 </div>
                 <nav>
                     {usuarioLogueado ?

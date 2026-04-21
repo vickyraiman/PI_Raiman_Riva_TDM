@@ -28,7 +28,7 @@ class SeccionTVNowPlaying extends Component{
         }
         return(
             <section className="row cards" id="on-air-today">
-                {this.state.series.map((serie)=>(
+                {this.state.series.slice(0,4).map((serie)=>(
                         <Card
                             key={serie.id}
                             id={serie.id}

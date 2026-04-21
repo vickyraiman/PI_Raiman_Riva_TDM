@@ -18,9 +18,14 @@ class Serie extends Component {
     componentDidMount() {
         fetch(`https://api.themoviedb.org/3/tv/${this.props.match.params.id}?api_key=${apikey}`)
             .then(response => response.json())
-            .then(data => this.setState({
-                serie: data
-            }))
+            .then(data => {
+                let favoritos = JSON.parse(localStorage.getItem("favoritosSerie")) || [];
+
+                this.setState({
+                    serie: data,
+                    esFavorito: favoritos.includes(data.id)
+                });
+            })
             .catch(error => console.log(error));
 
         fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apikey}`)
@@ -31,55 +36,71 @@ class Serie extends Component {
             .catch(error => console.log(error))
     }
 
-        agregarFavoritos() {
+    agregarFavoritos() {
+        let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie")) || [];
 
-        let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie"))
-        this.setState({
-            esFavorito: !this.state.esFavorito,
-        });
-
-            if (arrayFavoritosSerie === null) {
-                arrayFavoritosSerie = [];
-            }
+        if (!arrayFavoritosSerie.includes(this.state.serie.id)) {
             arrayFavoritosSerie.push(this.state.serie.id);
             localStorage.setItem("favoritosSerie", JSON.stringify(arrayFavoritosSerie));
+        }
 
-            this.setState({
-                esFavorito: true,
-            });
+        this.setState({
+            esFavorito: true,
+        });
+    }
+
+    quitarFavoritos() {
+        let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie")) || [];
+
+        let filtrados = arrayFavoritosSerie.filter(
+            (id) => id !== this.state.serie.id
+        );
+
+        localStorage.setItem("favoritosSerie", JSON.stringify(filtrados));
+
+        this.setState({
+            esFavorito: false,
+        });
     }
 
 
-render(){
-    let usuarioLogueado = cookies.get("user-cookie");
-    if (this.state.serie === null) {
+    render() {
+        let usuarioLogueado = cookies.get("user-cookie");
+        
+        if (this.state.serie === null) {
+            return (
+                <Loader />
+            )
+        }
         return (
-            <Loader/>
+            <div>
+                <Header />
+                <h2 class="alert alert-primary">{this.state.serie.name}</h2>
+                <section className="row">
+                    <img src={"https://image.tmdb.org/t/p/w342/" + this.state.serie.poster_path} className="col-md-6" alt={this.state.serie.title} />
+                    <section className="col-md-6 info">
+                        <h3>Sinópsis</h3>
+                        <p className="description">{this.state.serie.overview}</p>
+                        <p className='mt-0 mb-0' id='release-date'><strong>Fecha de estreno:</strong> {this.state.serie.first_air_date}</p>
+                        <p className="mt-0" id="votes"><strong>Puntuación:</strong> {this.state.serie.vote_average}</p>
+                        <p className="mt-0" id="votes"><strong>Genero:</strong>{this.state.serie.genres.map(genero => genero.name + ' ')}</p>
+                        {usuarioLogueado ? (
+                            this.state.esFavorito ? (
+                                <button onClick={() => this.quitarFavoritos()} className="btn btn-secondary">
+                                    ❤️
+                                </button>
+                            ) : (
+                                <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
+                                    🩶
+                                </button>
+                            )
+                        ) : null}
+                    </section>
+                </section>
+
+            </div>
+
         )
     }
-    return (
-        <div>
-            <Header/>
-            <h2 class="alert alert-primary">{this.state.serie.name}</h2>
-            <section className="row">
-                <img src={"https://image.tmdb.org/t/p/w342/" + this.state.serie.poster_path} className="col-md-6" alt={this.state.serie.title} />
-                <section className="col-md-6 info">
-                    <h3>Sinópsis</h3>
-                    <p className="description">{this.state.serie.overview}</p>
-                    <p className='mt-0 mb-0' id='release-date'><strong>Fecha de estreno:</strong> {this.state.serie.first_air_date}</p>
-                    <p className="mt-0" id="votes"><strong>Puntuación:</strong> {this.state.serie.vote_average}</p>
-                    <p className="mt-0" id="votes"><strong>Genero:</strong>{this.state.serie.genres.map(genero => genero.name + ' ')}</p>
-                    {usuarioLogueado ? (
-                        <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
-                            {this.state.esFavorito ? "❤️" : "🩶"}
-                        </button>
-                    ) : null}
-                </section>
-            </section>
-
-        </div>
-
-    )
-}
 }
 export default Serie;
