@@ -62,7 +62,7 @@ useEffect(() => {
                 .catch(error => console.log(error))
         );
     }
-})
+}, [])
 
 function sacarFavorito(id, tipo) {
 
@@ -105,6 +105,7 @@ function sacarFavorito(id, tipo) {
 
         setSeriesFavoritas(seriesActualizadas);
     }
+}
 
 
     return (
@@ -190,7 +191,6 @@ function sacarFavorito(id, tipo) {
             </div>
         </div>
     );
-}
 }
 
 export default Favoritas

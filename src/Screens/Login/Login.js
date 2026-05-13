@@ -20,7 +20,7 @@ function Login(props) {
             (usuario) => usuario.email === email
         )[0];
 
-        if (usuarioExistente === undefined || usuarioExistente.password !== this.state.password) {
+        if (usuarioExistente === undefined || usuarioExistente.password !== password) {
             alert("Credenciales incorrectas");
         } else {
             localStorage.setItem("usuarioLogueado", email);
@@ -35,15 +35,15 @@ function Login(props) {
                 <h2 className="alert alert-primary">Iniciar sesión</h2>
                 <div className="row justify-content-center">
                     <div className="col-md-6">
-                        <form onSubmit={(event) => this.evitarSubmit(event)}>
+                        <form onSubmit={(event) => evitarSubmit(event)}>
                             <div className="form-group">
                                 <label>Email:</label>
-                            <input type="email" className="form-control" value={this.state.email} onChange={(event) => this.setState({ email: event.target.value })} ></input>
+                            <input type="email" className="form-control" value={email} onChange={(event) => setEmail(event.target.value)} ></input>
                         </div>
 
                         <div className="form-group">
                             <label>Password:</label>
-                            <input type="password" className="form-control" value={this.state.password} onChange={(event) => this.setState({ password: event.target.value })} ></input>
+                            <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} ></input>
                         </div>
 
                             <button type="submit" className="btn btn-primary btn-block">Iniciar Sesión</button>
