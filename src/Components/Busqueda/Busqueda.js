@@ -1,40 +1,31 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router-dom';
 
-class Busqueda extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            busqueda: ''
-        };
-    }
+function Busqueda(props) {
+    const [busqueda, setBusqueda] = useState("");
     
-    controlarCambios(event){
-        this.setState({
-            busqueda: event.target.value
-        });
+    function controlarCambios(event){
+        setBusqueda(event.target.value);
     }
 
 
-    enviarForm(event){
+    function enviarForm(event){
         event.preventDefault(); 
 
-        if (this.state.busqueda === "") {
+        if (busqueda === "") {
             return;
         }
 
-        this.props.history.push(`/searchresults/${this.state.busqueda}`); 
+        props.history.push(`/searchresults/${busqueda}`); 
     }
 
-    render(){
         return(
-            <form className="search-form" onSubmit={(event) => this.enviarForm(event)}>
-                <input type="text" name="searchData" placeholder="Buscar..." value={this.state.busqueda} onChange={(event) => this.controlarCambios(event)} />
+            <form className="search-form" onSubmit={(event) => enviarForm(event)}>
+                <input type="text" name="searchData" placeholder="Buscar..." value={busqueda} onChange={(event) => controlarCambios(event)} />
                 <button type="submit" className="btn btn-success btn-sm">Buscar</button>
             </form>
         )
     }
-}
 
 
 

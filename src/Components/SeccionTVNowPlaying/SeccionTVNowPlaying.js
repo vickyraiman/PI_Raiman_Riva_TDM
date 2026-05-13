@@ -1,34 +1,27 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import Card from '../Card/Card';
 import Loader from "../../Components/Loader/Loader";
 const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f'
 
-class SeccionTVNowPlaying extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            series: []
-        };
-    }
+function SeccionTVNowPlaying(props) {
+    const [series, setSeries] = useState([]);
 
-    componentDidMount(){
-
+    useEffect(() => {
         fetch(`https://api.themoviedb.org/3/tv/airing_today?api_key=${apikey}`)
             .then(response => response.json())
-            .then(data => this.setState({series: data.results}))
+            .then(data => setSeries(data.results))
             .catch(error => console.log(error));
+    }, []);
 
-    }
 
-    render(){
-        if (this.state.series === null) {
+        if (series === null) {
             return (
                 <Loader/>
             )
         }
         return(
             <section className="row cards" id="on-air-today">
-                {this.state.series.slice(0,4).map((serie)=>(
+                {series.slice(0,4).map((serie)=>(
                         <Card
                             key={serie.id}
                             id={serie.id}
@@ -40,6 +33,6 @@ class SeccionTVNowPlaying extends Component{
             </section>
         )
     }
-}
+
 
 export default SeccionTVNowPlaying;

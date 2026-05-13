@@ -1,34 +1,28 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import Card from '../Card/Card';
 import Loader from "../../Components/Loader/Loader";
 const apikey = 'd83de1bb2a9e924ae59cd4751b6e015f'
 
-class SeccionTVPopulares extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            series: []
-        };
-    }
+function SeccionTVPopulares(props) {
+    const [series, setSeries] = useState([]);
 
-    componentDidMount(){
+    useEffect(() => {
 
         fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${apikey}`)
             .then(response => response.json())
-            .then(data => this.setState({series: data.results}))
+            .then(data => setSeries(data.results))
             .catch(error => console.log(error));
+    }, []);
 
-    }
 
-    render(){
-        if (this.state.series === null) {
+        if (series === null) {
             return (
                 <Loader/>
             )
         }
         return(
             <section className="row cards" id="tv-show">
-                    {this.state.series.slice(0,4).map((serie)=>(
+                    {series.slice(0,4).map((serie)=>(
                         <Card
                             key={serie.id}
                             id={serie.id}
@@ -40,6 +34,6 @@ class SeccionTVPopulares extends Component{
             </section>
         )
     }
-}
+
 
 export default SeccionTVPopulares;
