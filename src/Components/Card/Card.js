@@ -1,128 +1,114 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-class Card extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            esFavorito: false,
-            mostrarDescripcion: false,
-        };
-    }
+function Card(props) {
+    const [esFavorito, setEsFavorito] = useState(false);
+    const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
 
-    componentDidMount() {
+    useEffect(() => {
         let arrayFavoritosPelicula = JSON.parse(localStorage.getItem("favoritosPelicula"));
         let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie"));
 
-        if (this.props.tipo === "pelicula") {
+        if (props.tipo === "pelicula") {
             if (arrayFavoritosPelicula === null) {
                 arrayFavoritosPelicula = [];
             }
-            this.setState({
-                esFavorito: arrayFavoritosPelicula.includes(this.props.id),
-            });
-        } else if (this.props.tipo === "serie") {
+            setEsFavorito(arrayFavoritosPelicula.includes(props.id));
+        } else if (props.tipo === "serie") {
             if (arrayFavoritosSerie === null) {
                 arrayFavoritosSerie = [];
             }
-            this.setState({
-                esFavorito: arrayFavoritosSerie.includes(this.props.id),
-            });
+            setEsFavorito(arrayFavoritosSerie.includes(props.id));
         }
-    }
+    }, []);
     
 
-    cambiarDescripcion() {
-        this.setState({ mostrarDescripcion: !this.state.mostrarDescripcion });
+    function cambiarDescripcion() {
+        setMostrarDescripcion(!mostrarDescripcion);
     }
 
-    agregarFavoritos() {
+    function agregarFavoritos() {
         let arrayFavoritosPelicula = JSON.parse(localStorage.getItem("favoritosPelicula"));
         let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie"));
 
-        if (this.props.tipo === "pelicula") {
+        if (props.tipo === "pelicula") {
             if (arrayFavoritosPelicula === null) {
                 arrayFavoritosPelicula = [];
             }
-            if (!arrayFavoritosPelicula.includes(this.props.id)) {
-                arrayFavoritosPelicula.push(this.props.id);
+            if (!arrayFavoritosPelicula.includes(props.id)) {
+                arrayFavoritosPelicula.push(props.id);
             }
             localStorage.setItem("favoritosPelicula", JSON.stringify(arrayFavoritosPelicula));
 
-        } else if (this.props.tipo === "serie") {
+        } else if (props.tipo === "serie") {
             if (arrayFavoritosSerie === null) {
                 arrayFavoritosSerie = [];
             }
-            if (!arrayFavoritosSerie.includes(this.props.id)) {
-                arrayFavoritosSerie.push(this.props.id);
+            if (!arrayFavoritosSerie.includes(props.id)) {
+                arrayFavoritosSerie.push(props.id);
             }
             localStorage.setItem("favoritosSerie", JSON.stringify(arrayFavoritosSerie));
         }
 
-        this.setState({
-            esFavorito: true,
-        });
+        setEsFavorito(true);
     }
 
-    quitarFavoritos() {
+    function quitarFavoritos() {
         let arrayFavoritosPelicula = JSON.parse(localStorage.getItem("favoritosPelicula"));
         let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie"));
 
-        if (this.props.tipo === "pelicula") {
+        if (props.tipo === "pelicula") {
             if (arrayFavoritosPelicula === null) {
                 arrayFavoritosPelicula = [];
             }
 
-            let filtrados = arrayFavoritosPelicula.filter((id) => id !== this.props.id);
+            let filtrados = arrayFavoritosPelicula.filter((id) => id !== id);
             localStorage.setItem("favoritosPelicula", JSON.stringify(filtrados));
 
-        } else if (this.props.tipo === "serie") {
+        } else if (props.tipo === "serie") {
             if (arrayFavoritosSerie === null) {
                 arrayFavoritosSerie = [];
             }
 
-            let filtrados = arrayFavoritosSerie.filter((id) => id !== this.props.id);
+            let filtrados = arrayFavoritosSerie.filter((id) => id !== id);
             localStorage.setItem("favoritosSerie", JSON.stringify(filtrados));
         }
 
-        this.setState({
-            esFavorito: false,
-        });
+        setEsFavorito(false);
     }
 
-    render() {
         let rutaDetalle = "";
         let usuarioLogueado = cookies.get("user-cookie");
-        if (this.props.tipo === 'pelicula') {
-            rutaDetalle = `/pelicula/${this.props.id}`;
-        } else if (this.props.tipo === 'serie') {
-            rutaDetalle = `/serie/${this.props.id}`;
+        if (props.tipo === 'pelicula') {
+            rutaDetalle = `/pelicula/${props.id}`;
+        } else if (props.tipo === 'serie') {
+            rutaDetalle = `/serie/${props.id}`;
         }
 
         return (
             <article className="single-card-movie">
-                <img src={"https://image.tmdb.org/t/p/w342/" + this.props.imagen} className="card-img-top"
-                    alt={this.props.titulo} />
+                <img src={"https://image.tmdb.org/t/p/w342/" + props.imagen} className="card-img-top"
+                    alt={props.titulo} />
 
                 <div className="cardBody">
-                    <h5 className="card-title">{this.props.titulo}</h5>
-                    <button onClick={() => this.cambiarDescripcion()} className="btn btn-info">
-                        {this.state.mostrarDescripcion ? "Ocultar Descripción" : "Mostrar Descripción"}
+                    <h5 className="card-title">{props.titulo}</h5>
+                    <button onClick={() => cambiarDescripcion()} className="btn btn-info">
+                        {mostrarDescripcion ? "Ocultar Descripción" : "Mostrar Descripción"}
                     </button>
-                    {this.state.mostrarDescripcion ? (<p className="card-text">{this.props.descripcion}</p>) : null}
+                    {mostrarDescripcion ? (<p className="card-text">{props.descripcion}</p>) : null}
                     <Link to={rutaDetalle}>
                         <button className="btn btn-primary">Ver Más</button>
                     </Link>
 
                     {usuarioLogueado ? (
-                        this.state.esFavorito ? (
-                            <button onClick={() => this.quitarFavoritos()} className="btn btn-secondary">
+                        esFavorito ? (
+                            <button onClick={() => quitarFavoritos()} className="btn btn-secondary">
                                 ❤️
                             </button>
                         ) : (
-                            <button onClick={() => this.agregarFavoritos()} className="btn btn-secondary">
+                            <button onClick={() => agregarFavoritos()} className="btn btn-secondary">
                                 🩶
                             </button>
                         )
@@ -131,6 +117,6 @@ class Card extends Component {
             </article>
         );
     }
-}
+
 
 export default Card;
