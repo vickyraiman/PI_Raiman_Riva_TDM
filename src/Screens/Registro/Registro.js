@@ -1,3 +1,4 @@
+import { useEffect , useState } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
 import Login from "../Login/Login";
@@ -6,16 +7,12 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-class Registro extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-        };
-    }
-    evitarSubmit(event) {
-    event.preventDefault();
+function Registro(props) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function evitarSubmit(event) {
+        event.preventDefault();
 
     let usuariosStorage = localStorage.getItem("usuarios");
     let usuarios = [];
@@ -25,22 +22,22 @@ class Registro extends React.Component {
     }
 
     let usuarioRepetido = usuarios.filter(
-        (usuario) => usuario.email === this.state.email
+        (usuario) => usuario.email === email
     );
 
-    if (this.state.email === "" || this.state.password === "") {
+    if (email === "" || password === "") {
         alert("Por favor, complete todos los campos.");
     } 
     else if (usuarioRepetido.length > 0) {
         alert("El email ya está en uso");
     } 
-    else if (this.state.password.length < 6) {
+    else if (password.length < 6) {
         alert("La contraseña debe tener al menos 6 caracteres.");
     } 
     else {
         let nuevoUsuario = {
-            email: this.state.email,
-            password: this.state.password
+            email: email,
+            password: password
         };
 
         usuarios.push(nuevoUsuario);
@@ -53,35 +50,35 @@ class Registro extends React.Component {
 
         alert("Registro exitoso");
 
-        this.props.history.push("/login");
+        props.history.push("/login");
 
-        this.setState({ email: "", password: "" });
+        setEmail("");
+        setPassword("");
     }
 }
 
-controlarCambiosEmail(event) {
-    this.setState({ email: event.target.value });
+function controlarCambiosEmail(event) {
+    setEmail(event.target.value);
 }
 
-controlarCambiosPassword(event) {
-    this.setState({ password: event.target.value });
+function controlarCambiosPassword(event) {
+    setPassword(event.target.value);
 }
 
-    render() {
-        return (
-            <div>
+    return (
+        <div>
                 <Header/>
                 <h2 className="alert alert-primary">Registro</h2>
                 <div className="row justify-content-center"></div>
                 <div className='col-md-6'>
-                    <form onSubmit={(event) => this.evitarSubmit(event)}>
+                    <form onSubmit={(event) => evitarSubmit(event)}>
                         <div className="form-group">
                             <label>Email:</label>
-                            <input type="email" className="form-control" value={this.state.email} onChange={(event) => this.controlarCambiosEmail(event)} />
+                            <input type="email" className="form-control" value={email} onChange={(event) => controlarCambiosEmail(event)} />
                         </div>
                         <div className="form-group">
                             <label>Password:</label>
-                            <input type="password" className="form-control" value={this.state.password} onChange={(event) => this.controlarCambiosPassword(event)} />
+                            <input type="password" className="form-control" value={password} onChange={(event) => controlarCambiosPassword(event)} />
                         </div>
                         <button type="submit" className="btn btn-primary">Registrarse</button>
                     </form>
@@ -93,7 +90,7 @@ controlarCambiosPassword(event) {
         );
     }
 
-}
+
 
 
 export default Registro;

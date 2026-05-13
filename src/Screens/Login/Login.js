@@ -1,16 +1,12 @@
 import React from "react";
 import Header from '../../Components/Header/Header';
+import { useEffect , useState } from "react";
 
-class Login extends React.Component {
-    
-    constructor(props) {
-        super(props);
-        this.state = { 
-            email: "", 
-            password: ""
-        };
-    }
-    evitarSubmit(event) {
+function Login(props) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function evitarSubmit(event) {
         event.preventDefault();
 
         let usuariosStorage = localStorage.getItem("usuarios");
@@ -21,20 +17,19 @@ class Login extends React.Component {
         }
 
         let usuarioExistente = usuarios.filter(
-            (usuario) => usuario.email === this.state.email
+            (usuario) => usuario.email === email
         )[0];
 
         if (usuarioExistente === undefined || usuarioExistente.password !== this.state.password) {
             alert("Credenciales incorrectas");
         } else {
-            localStorage.setItem("usuarioLogueado", this.state.email);
+            localStorage.setItem("usuarioLogueado", email);
             alert("Inicio de sesión exitoso");
-            this.props.history.push("/");
+            props.history.push("/");
         }
     }
-    
-    render() {
-        return (
+
+    return (
             <div>
                 <Header/>
                 <h2 className="alert alert-primary">Iniciar sesión</h2>
@@ -58,7 +53,7 @@ class Login extends React.Component {
             </div>
         )
     }
-}
+
 
 export default Login;
 

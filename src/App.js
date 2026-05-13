@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "./Screens/Home/Home";
 import DetallePelicula from "./Screens/DetallePelicula/DetallePelicula";
-import SearchResults from "./Screens/SearchResults/searchResults";
+import SearchResults from "./Screens/SearchResults/SearchResults";
 import Footer from "./Components/Footer/Footer";
 import DetalleSerie from "./Screens/DetalleSerie/DetalleSerie";
 import Error from "./Screens/Error/Error";

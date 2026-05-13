@@ -1,46 +1,40 @@
-import React from "react";
+import { useEffect , useState } from "react";
+import React, { use } from "react";
 import {Link, withRouter} from "react-router-dom"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            cookie: cookies.get("user-cookie")
-        }
-    }
+function Header(params) {
+    const [cookie, setCookie] = useState(cookies.get("user-cookie"));
+    const [UsuarioLogueado, setUsuarioLogueado] = useState(cookies.get("user-cookie"));
 
-    componentDidUpdate() {
-        if (this.state.cookie !== cookies.get("user-cookie")) {
-            this.setState({
-                cookie: cookies.get("user-cookie")
-            });
-        }
-    }
 
-    cerrarSesion() {
+    useEffect(() => {
+        if (cookie !== cookies.get("user-cookie")) {
+            setCookie(cookies.get("user-cookie"));
+        }
+    }, [cookie]);
+
+    function cerrarSesion() {
         cookies.remove("user-cookie");
-        this.setState({
-            cookie: cookies.get("user-cookie")})
+        setCookie(cookies.get("user-cookie"));
     }
 
-    render() {
-        let usuarioLogueado = cookies.get("user-cookie");
-        return (
-            <React.Fragment>
-                <div className="logo-container">
-                    <img className="logo" src="/img/logo.jpg" alt="" />
-                </div>
+    return (
+        setUsuarioLogueado(cookies.get("user-cookie")),
+        <React.Fragment>
+            <div className="logo-container">
+                <img className="logo" src="/img/logo.jpg" alt="" />
+            </div>
                 <nav>
-                    {usuarioLogueado ?
+                    {UsuarioLogueado ?
                         <ul className="nav nav-tabs my-4">
                             <li className= "nav-item"><Link className="nav-link" to="/">Home</Link></li>
                             <li className= "nav-item"><Link className="nav-link" to="/Peliculas">Peliculas</Link></li>
                             <li className= "nav-item"><Link className="nav-link" to="/Series">Series</Link></li>
                             <li className= "nav-item"><Link className="nav-link" to="/Favoritas">Favoritas</Link></li>
-                            <button className="nav-link" onClick={() => this.cerrarSesion()}>Logout</button>
+                            <button className="nav-link" onClick={() => cerrarSesion()}>Logout</button>
                         </ul>
                         :
                         <ul className= "nav nav-tabs my-4">
@@ -55,6 +49,5 @@ class Header extends React.Component {
             </React.Fragment>
         )
     }
-}
 
 export default Header;
