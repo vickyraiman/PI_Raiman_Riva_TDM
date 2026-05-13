@@ -9,6 +9,7 @@ const cookies = new Cookies();
 function Serie(props) {
     const [serie, setSerie] = useState(null);
     const [esFavorito, setEsFavorito] = useState(false);
+    const [genero, setGenero] = useState([]);
 
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/tv/${props.match.params.id}?api_key=${apikey}`)
@@ -21,6 +22,15 @@ function Serie(props) {
             })
             .catch(error => console.log(error));
     }, []);
+
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apikey}`)
+            .then(response => response.json())
+            .then(data => 
+                setGenero(data.genres)
+            )
+            .catch(error => console.log(error));}, 
+            []);
 
     function agregarFavoritos() {
         let arrayFavoritosSerie = JSON.parse(localStorage.getItem("favoritosSerie")) || [];
