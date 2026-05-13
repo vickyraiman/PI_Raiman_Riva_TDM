@@ -91,11 +91,6 @@ class Favoritas extends Component {
 
             localStorage.setItem("favoritosPelicula", JSON.stringify(filtrados))
 
-
-            console.log(favoritosPelicula);
-            if (favoritosPelicula.includes(id)) {
-            }
-
             let peliculasActualizadas = this.state.peliculasFavoritas.filter(function (unaPelicula) {
                 return unaPelicula.id !== id
             })

@@ -32,6 +32,7 @@ class Card extends Component {
             });
         }
     }
+    
 
     cambiarDescripcion() {
         this.setState({ mostrarDescripcion: !this.state.mostrarDescripcion });

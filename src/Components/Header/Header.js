@@ -4,11 +4,9 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 
-
 class Header extends React.Component {
     constructor(props) {
         super(props)
-
         this.state = {
             cookie: cookies.get("user-cookie")
         }

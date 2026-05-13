@@ -51,8 +51,8 @@ class Login extends React.Component {
                             <input type="password" className="form-control" value={this.state.password} onChange={(event) => this.setState({ password: event.target.value })} ></input>
                         </div>
 
-                        <button type="submit" className="btn btn-primary btn-block">Iniciar Sesión</button>
-                    </form>
+                            <button type="submit" className="btn btn-primary btn-block">Iniciar Sesión</button>
+                        </form>
                 </div>
             </div>
             </div>

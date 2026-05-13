@@ -8,24 +8,22 @@ class Busqueda extends Component {
             busqueda: ''
         };
     }
-
+    
     controlarCambios(event){
         this.setState({
             busqueda: event.target.value
         });
     }
 
+
     enviarForm(event){
-        event.preventDefault();
+        event.preventDefault(); 
 
         if (this.state.busqueda === "") {
             return;
         }
 
-        console.log('props nav', this.props)
-        console.log(this.state)
-
-        this.props.history.push(`/searchresults/${this.state.busqueda}`);
+        this.props.history.push(`/searchresults/${this.state.busqueda}`); 
     }
 
     render(){
@@ -37,6 +35,7 @@ class Busqueda extends Component {
         )
     }
 }
+
 
 
 export default withRouter(Busqueda);

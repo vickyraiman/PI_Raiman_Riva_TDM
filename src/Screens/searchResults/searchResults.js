@@ -16,7 +16,6 @@ class SearchResults extends Component {
     }
 
     componentDidMount() {
-
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apikey}&query=${this.props.match.params.nombre}`)
             .then(response => response.json())
             .then(data => this.setState({

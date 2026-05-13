@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
 import Login from "../Login/Login";
 import Header from "../../Components/Header/Header";
+import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
